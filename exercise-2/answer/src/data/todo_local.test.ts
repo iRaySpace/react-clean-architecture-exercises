@@ -1,8 +1,8 @@
-import { TodoDataRepository } from "./todo";
+import { TodoLocalDataRepository } from "./todo_local";
 import { TodoEntity } from "../domain/entities/todo";
 
 test('add todo entity to data repository', async () => {
-    const todoRepository = new TodoDataRepository();
+    const todoRepository = new TodoLocalDataRepository();
     const buyTodo = await todoRepository.addTodo("Buy");
     const addedBuyTodo = await todoRepository.getTodo(buyTodo.getId());
     expect(addedBuyTodo?.getId()).toBe(0);
@@ -17,7 +17,7 @@ test('add todo entity to data repository', async () => {
 });
 
 test('edit todo entity to data repository', async () => {
-    const todoRepository = new TodoDataRepository();
+    const todoRepository = new TodoLocalDataRepository();
     const editedTodo = await todoRepository.addTodo("Buy");
     const addedTodo = await todoRepository.getTodo(editedTodo.getId());
     expect(addedTodo?.getId()).toBe(0);
@@ -26,13 +26,12 @@ test('edit todo entity to data repository', async () => {
     editedTodo.replaceWith(new TodoEntity(-1, "Sell"));
     expect(editedTodo?.getId()).toBe(0);
     expect(editedTodo?.getTitle()).toBe("Sell");
-    expect(addedTodo?.getTitle()).toBe("Sell");
 
     await todoRepository.reset();
 });
 
 test('remove todo entity to data repository', async () => {
-    const todoRepository = new TodoDataRepository();
+    const todoRepository = new TodoLocalDataRepository();
     const buyTodo = await todoRepository.addTodo("Buy");
     const addedBuyTodo = await todoRepository.getTodo(buyTodo.getId());
     expect(addedBuyTodo?.getId()).toBe(0);

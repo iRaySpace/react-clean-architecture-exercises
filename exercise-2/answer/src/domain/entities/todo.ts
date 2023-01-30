@@ -18,4 +18,15 @@ export class TodoEntity {
     replaceWith(todo: TodoEntity) {
         this.title = todo.title;
     }
+
+    static fromJSON({ id, title }: any): TodoEntity {
+        return new TodoEntity(id, title);
+    }
+
+    static toJSON(todo: TodoEntity) {
+        return {
+            id: todo.id,
+            title: todo.title,
+        };
+    }
 }
